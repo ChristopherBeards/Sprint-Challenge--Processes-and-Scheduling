@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/wait.h>
 
 #define PROMPT "lambda-shell$ "
 
@@ -107,6 +108,21 @@ int main(void)
 #endif
 
     /* Add your code for implementing the shell's logic here */
+    if (strcmp(args[0], "cd") == 0)
+    {
+      if (args_count == 2)
+      {
+        if (chdir(args[1]) < 0)
+        {
+          perror("chdir");
+        }
+      }
+      else
+      {
+        continue;
+      }
+    }
+
     int rc = fork();
 
     if (rc < 0)
